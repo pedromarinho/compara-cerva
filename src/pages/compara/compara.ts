@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController, ToastController } from 'ionic-angular';
+import { AppService } from '../../app/app.service';
 
 @Component({
   selector: 'compara',
@@ -11,30 +12,12 @@ export class ComparaPage implements OnInit {
 
   constructor(public navCtrl: NavController,
     public alertCtrl: AlertController,
-    public toastCtrl: ToastController) {
+    public toastCtrl: ToastController,
+    private app: AppService) {
   }
 
   ngOnInit(): void {
-    this.data = [
-      {
-        name: 'Skol latão',
-        price: 2.99,
-        quantity: 1,
-        liter: 6.29
-      },
-      {
-        name: 'Itaipava cx',
-        price: 22.50,
-        quantity: 12,
-        liter: 4.78
-      },
-      {
-        name: 'Antartica',
-        price: 2.59,
-        quantity: 1,
-        liter: 5.00
-      }
-    ]
+    this.data = this.app.list();
   }
 
   getData() {
@@ -49,7 +32,7 @@ export class ComparaPage implements OnInit {
     })
   }
 
-  delete(item): void {
+  delete(item, index): void {
     let confirm = this.alertCtrl.create({
       title: 'Deletar?',
       message: 'Tem certeza que deseja deletar ' + item.name + '?',
@@ -63,6 +46,7 @@ export class ComparaPage implements OnInit {
         {
           text: 'Ok',
           handler: () => {
+            this.app.delete(index);
             let toast = this.toastCtrl.create({
               message: item.name + ' deletado',
               duration: 3000
