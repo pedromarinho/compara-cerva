@@ -1,0 +1,41 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Description
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">
+                <span ion-text color="primary" showWhen="ios">Cancel</span>
+                <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content style="margin-left: 10px; margin-right: 10px">
+    <ion-list>
+        <ion-item>
+            <ion-label stacked>Nome</ion-label>
+            <ion-input type="text" [(ngModel)]="beer.name"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Preço</ion-label>
+            <ion-input type="number" [(ngModel)]="beer.price"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Unidade</ion-label>
+            <ion-input type="number" [(ngModel)]="beer.quantity"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Quantidade (ml)</ion-label>
+            <ion-input type="number" [(ngModel)]="beer.ml"></ion-input>
+        </ion-item>
+
+
+    </ion-list>
+
+    <button ion-button (click)="save()">Salvar</button>
+</ion-content>

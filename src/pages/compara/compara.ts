@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, AlertController, ToastController } from 'ionic-angular';
+import { NavController, AlertController, ToastController, ModalController } from 'ionic-angular';
 import { AppService } from '../../app/app.service';
+
+import { BeerPage } from '../beer/beer';
 
 @Component({
   selector: 'compara',
@@ -13,7 +15,8 @@ export class ComparaPage implements OnInit {
   constructor(public navCtrl: NavController,
     public alertCtrl: AlertController,
     public toastCtrl: ToastController,
-    private app: AppService) {
+    private app: AppService,
+    public modalCtrl: ModalController) {
   }
 
   ngOnInit(): void {
@@ -58,6 +61,12 @@ export class ComparaPage implements OnInit {
       ]
     });
     confirm.present();
+  }
+
+  openModal(beer) {
+
+    let modal = this.modalCtrl.create(BeerPage, beer);
+    modal.present();
   }
 
 }

@@ -8,6 +8,7 @@ import { AboutPage } from '../pages/about/about';
 import { ContadorPage } from '../pages/contador/contador';
 import { ComparaPage } from '../pages/compara/compara';
 import { TabsPage } from '../pages/tabs/tabs';
+import { BeerPage } from '../pages/beer/beer';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -18,7 +19,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AboutPage,
     ContadorPage,
     ComparaPage,
-    TabsPage
+    TabsPage,
+    BeerPage
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AboutPage,
     ContadorPage,
     ComparaPage,
-    TabsPage
+    TabsPage,
+    BeerPage
   ],
   providers: [
     AppService,
