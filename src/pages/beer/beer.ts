@@ -9,7 +9,6 @@ import { Beer } from '../../models/beer';
 })
 export class BeerPage {
     public beer = new Beer();
-    public edit = false;
 
     constructor(public platform: Platform,
         public params: NavParams,

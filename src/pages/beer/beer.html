@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>
-            Description
+            Cerveja
         </ion-title>
         <ion-buttons start>
             <button ion-button (click)="dismiss()">
@@ -15,26 +15,31 @@
 <ion-content style="margin-left: 10px; margin-right: 10px">
     <ion-list>
         <ion-item>
+            <ion-icon name="beer" item-start></ion-icon>
             <ion-label stacked>Nome</ion-label>
             <ion-input type="text" [(ngModel)]="beer.name"></ion-input>
         </ion-item>
 
         <ion-item>
+            <ion-icon name="cash" item-start></ion-icon>
             <ion-label stacked>Preço</ion-label>
             <ion-input type="number" [(ngModel)]="beer.price"></ion-input>
         </ion-item>
 
         <ion-item>
+            <ion-icon name="add-circle" item-start></ion-icon>
             <ion-label stacked>Unidade</ion-label>
             <ion-input type="number" [(ngModel)]="beer.quantity"></ion-input>
         </ion-item>
 
         <ion-item>
+            <ion-icon name="beaker" item-start></ion-icon>
             <ion-label stacked>Quantidade (ml)</ion-label>
             <ion-input type="number" [(ngModel)]="beer.ml"></ion-input>
         </ion-item>
 
         <ion-item>
+            <ion-icon name="pin" item-start></ion-icon>
             <ion-label stacked>Estabelecimento</ion-label>
             <ion-input type="text" [(ngModel)]="beer.local"></ion-input>
         </ion-item>
