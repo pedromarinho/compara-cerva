@@ -56,19 +56,19 @@ export class BeerPage {
             case 269:
                 return './assets/imgs/lata_269.png';
             case 300:
-                return './assets/imgs/garrafa_300.png';
+                return './assets/imgs/garrafa_300.jpg';
             case 350:
                 return './assets/imgs/lata_350.png';
             case 355:
-                return './assets/imgs/long_neck.png';
+                return './assets/imgs/garrafa_355.jpg';
             case 473:
                 return './assets/imgs/lata_473.png';
             case 550:
                 return './assets/imgs/lata_550.png';
             case 600:
-                return './assets/imgs/garrafa_600.png';
+                return './assets/imgs/garrafa_600.jpg';
             case 1000:
-                return './assets/imgs/garrafa_1000.png';
+                return './assets/imgs/garrafa_1000.jpg';
             default:
                 return './assets/imgs/lata_269.png';
 
