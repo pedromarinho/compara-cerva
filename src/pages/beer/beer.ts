@@ -9,6 +9,7 @@ import { Beer } from '../../models/beer';
 })
 export class BeerPage {
     public beer = new Beer();
+    public recipiente;
 
     constructor(public platform: Platform,
         public params: NavParams,
@@ -50,28 +51,33 @@ export class BeerPage {
         return this.beer.name && this.beer.price && this.beer.quantity && this.beer.ml;
     }
 
-    getIcon() {
-        console.log('ml: ', this.beer.ml)
-        switch (this.beer.ml) {
+    getIcon(selectedValue: any) {
+        this.beer.ml = selectedValue;
+        switch (Number(selectedValue)) {
             case 269:
-                return './assets/imgs/lata_269.png';
+                this.recipiente = './assets/imgs/lata_269.png';
+                break;
             case 300:
-                return './assets/imgs/garrafa_300.jpg';
+                this.recipiente = './assets/imgs/garrafa_300.jpg';
+                break;
             case 350:
-                return './assets/imgs/lata_350.png';
+                this.recipiente = './assets/imgs/lata_350.png';
+                break;
             case 355:
-                return './assets/imgs/garrafa_355.jpg';
+                this.recipiente = './assets/imgs/garrafa_355.jpg';
+                break;
             case 473:
-                return './assets/imgs/lata_473.png';
+                this.recipiente = './assets/imgs/lata_473.png';
+                break;
             case 550:
-                return './assets/imgs/lata_550.png';
+                this.recipiente = './assets/imgs/lata_550.png';
+                break;
             case 600:
-                return './assets/imgs/garrafa_600.jpg';
+                this.recipiente = './assets/imgs/garrafa_600.jpg';
+                break;
             case 1000:
-                return './assets/imgs/garrafa_1000.jpg';
-            default:
-                return './assets/imgs/lata_269.png';
-
+                this.recipiente = './assets/imgs/garrafa_1000.jpg';
+                break;
         }
     }
 }

@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-toolbar>
+    <ion-toolbar color="green1">
         <ion-title>
-            Cerveja
+            
         </ion-title>
         <ion-buttons start>
             <button ion-button icon-only (click)="dismiss()">
@@ -21,29 +21,30 @@
 <ion-content style="margin-left: 10px; margin-right: 10px">
     <ion-list>
         <ion-item>
-            <ion-icon name="beer" item-start></ion-icon>
+            <ion-icon color="green1" name="beer" item-start></ion-icon>
             <ion-label stacked>Nome</ion-label>
             <ion-input type="text" [(ngModel)]="beer.name"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-icon name="cash" item-start></ion-icon>
+            <ion-icon color="green1" name="cash" item-start></ion-icon>
             <ion-label stacked>Preço</ion-label>
             <ion-input type="number" [(ngModel)]="beer.price"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-icon name="add-circle" item-start></ion-icon>
+            <ion-icon color="green1" name="add-circle" item-start></ion-icon>
             <ion-label stacked>Unidade</ion-label>
             <ion-input type="number" [(ngModel)]="beer.quantity"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-avatar item-start>
-                <img [src]=getIcon()>
+            <ion-icon color="green1" [hidden]="recipiente" name="beer" item-end></ion-icon>
+            <ion-avatar [hidden]="!recipiente" item-end>
+                <img src={{recipiente}}>
             </ion-avatar>
             <ion-label>Recipiente</ion-label>
-            <ion-select [(ngModel)]="beer.ml">
+            <ion-select (ionChange)="getIcon($event)">
                 <ion-option value="269">latinha</ion-option>
                 <ion-option value="350">lata</ion-option>
                 <ion-option value="473">latão</ion-option>
@@ -52,7 +53,6 @@
                 <ion-option value="355">long neck (355ml)</ion-option>
                 <ion-option value="600">garrafa (600ml)</ion-option>
                 <ion-option value="1000">litrão</ion-option>
-                <ion-option value="">outra</ion-option>
             </ion-select>
         </ion-item>
 
@@ -61,11 +61,11 @@
             <ion-input type="number" [(ngModel)]="beer.ml"></ion-input>
         </ion-item>
 
-        <ion-item>
+        <!-- <ion-item>
             <ion-icon name="pin" item-start></ion-icon>
             <ion-label stacked>Estabelecimento</ion-label>
             <ion-input type="text" [(ngModel)]="beer.local"></ion-input>
-        </ion-item>
+        </ion-item> -->
 
     </ion-list>
 </ion-content>
