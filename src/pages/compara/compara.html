@@ -16,13 +16,14 @@
       <p>R$ {{item.price}}</p>
       <p>{{item.quantity}} uni x {{item.ml}}ml</p>
       <p>Litro: R$ {{item.liter}}</p>
-      <ion-icon name="create" color="secondary" item-end (click)="openModal(item)"></ion-icon>
+      <h2>{{item.local}}</h2>
+      <ion-icon name="create" color="secondary" item-end (click)="openBeerModal(item)"></ion-icon>
       <ion-icon name="trash" color="danger" item-end style="margin-left: 20px" (click)="delete(item, i)"></ion-icon>
     </ion-item>
   </ion-list>
 
   <ion-fab top right edge>
-    <button ion-fab (click)="openModal()">
+    <button ion-fab (click)="openBeerModal()">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>

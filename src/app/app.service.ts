@@ -1,33 +1,20 @@
 export class AppService {
-    public beers = [
-        {
-            name: 'Skol latão',
-            price: 2.99,
-            quantity: 1,
-            ml: 475,
-            liter: 6.29
-        },
-        {
-            name: 'Itaipava cx',
-            price: 22.50,
-            quantity: 12,
-            ml: 350,
-            liter: 4.78
-        },
-        {
-            name: 'Antartica',
-            price: 2.59,
-            quantity: 1,
-            ml: 350,
-            liter: 5.00
-        }
-    ];
+    public beers = [];
 
     list() {
         return this.beers;
     }
 
     save(beer) {
+        for (let i = 0; i < this.beers.length; i++) {
+            if (this.beers[i].id === beer.id) {
+                this.beers[i] = beer;
+                console.log('edit ', beer)
+                return;
+            }
+        }
+        beer.id = this.beers.length;
+        console.log('save ', beer);
         this.beers.push(beer);
     }
 

@@ -63,8 +63,7 @@ export class ComparaPage implements OnInit {
     confirm.present();
   }
 
-  openModal(beer) {
-
+  openBeerModal(beer) {
     let modal = this.modalCtrl.create(BeerPage, beer);
     modal.present();
   }

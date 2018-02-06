@@ -2,18 +2,14 @@ import { Component } from '@angular/core';
 
 import { Platform, NavParams, ViewController } from 'ionic-angular';
 import { AppService } from '../../app/app.service';
+import { Beer } from '../../models/beer';
 
 @Component({
     templateUrl: 'beer.html'
 })
 export class BeerPage {
-    public beer = {
-        name: '',
-        price: '',
-        quantity: '',
-        ml: '',
-        liter: 0
-    };
+    public beer = new Beer();
+    public edit = false;
 
     constructor(public platform: Platform,
         public params: NavParams,
@@ -32,8 +28,13 @@ export class BeerPage {
     }
 
     save() {
+        this.beer.liter = this.getPricePerLiter(this.beer);
         this.app.save(this.beer);
         this.dismiss();
+    }
+
+    getPricePerLiter(beer: Beer): number {
+        return Number(((beer.price * 1000) / (beer.ml * beer.quantity)).toFixed(2));
     }
 }
 
