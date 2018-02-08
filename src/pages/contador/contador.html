@@ -1,17 +1,55 @@
 <ion-header>
   <ion-navbar color="color1">
-    <ion-title>Home</ion-title>
+    <ion-title>Calculadora</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content padding style="text-align: center; color: #d48e00; font-size: 1.2em">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4>
+        <ion-item>
+          <ion-label floating class="active">Preço</ion-label>
+          <ion-input type="number" [(ngModel)]="data.price"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-4>
+        <ion-item>
+          <ion-label floating class="active">Ml</ion-label>
+          <ion-input type="number" [(ngModel)]="data.ml"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-4>
+        <ion-item>
+          <ion-label floating class="active">Pessoas</ion-label>
+          <ion-input type="number" [(ngModel)]="data.peaple"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <img src="assets/imgs/counter_background.png" height="200" width="200">
+
+  <p class="beers">{{beers}}</p>
+
+  <ion-fab class="remove_bt">
+    <button ion-fab color="color2" (click)="remove()">
+      <ion-icon name="remove"></ion-icon>
+    </button>
+  </ion-fab>
+  <ion-fab class="add_bt">
+    <button ion-fab color="color2" (click)="add()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-card style="margin-top: -50px">
+    <ion-card-header style="color: #d48e00">
+      <b>R$: {{total.price}}</b>
+    </ion-card-header>
+    <ion-card-content>
+      <p style="color: #d48e00">Total por pessoa: R$ {{total.forEach}}</p>
+      <p style="color: #d48e00">Total consumido: {{total.ml}} ml</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
