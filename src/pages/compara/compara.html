@@ -1,7 +1,7 @@
 <ion-header>
-  <ion-navbar color="green1">
+  <ion-navbar color="color1">
     <ion-title>
-      ComparaCERVA
+      ComparaCerva
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -17,13 +17,13 @@
       <p>{{item.quantity}} uni x {{item.ml}}ml</p>
       <p>Litro: R$ {{item.liter}}</p>
       <h2>{{item.local}}</h2>
-      <ion-icon color="green1" name="create" item-end (click)="openBeerModal(item)"></ion-icon>
-      <ion-icon color="green1" name="trash" item-end style="margin-left: 20px" (click)="delete(item, i)"></ion-icon>
+      <ion-icon color="color1" name="create" item-end (click)="openBeerModal(item)"></ion-icon>
+      <ion-icon color="color1" name="trash" item-end style="margin-left: 20px" (click)="delete(item, i)"></ion-icon>
     </ion-item>
   </ion-list>
 
   <ion-fab top right edge>
-    <button ion-fab (click)="openBeerModal()" color="green2">
+    <button ion-fab (click)="openBeerModal()" color="color2">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>

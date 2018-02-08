@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color="green1">
+    <ion-toolbar color="color1">
         <ion-title>
             {{title}}
         </ion-title>
@@ -21,25 +21,25 @@
 <ion-content>
     <ion-list>
         <ion-item>
-            <ion-icon color="green1" name="beer" item-start></ion-icon>
+            <ion-icon color="color1" name="beer" item-start></ion-icon>
             <ion-label stacked>Nome</ion-label>
             <ion-input type="text" [(ngModel)]="beer.name"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-icon color="green1" name="cash" item-start></ion-icon>
+            <ion-icon color="color1" name="cash" item-start></ion-icon>
             <ion-label stacked>Preço</ion-label>
             <ion-input type="number" [(ngModel)]="beer.price"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-icon color="green1" name="add-circle" item-start></ion-icon>
+            <ion-icon color="color1" name="add-circle" item-start></ion-icon>
             <ion-label stacked>Unidade</ion-label>
             <ion-input type="number" [(ngModel)]="beer.quantity"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-icon color="green1" [hidden]="recipiente" name="beer" item-end></ion-icon>
+            <ion-icon color="color1" [hidden]="recipiente" name="beer" item-end></ion-icon>
             <ion-avatar [hidden]="!recipiente" item-end>
                 <img src={{recipiente}}>
             </ion-avatar>
