@@ -3,6 +3,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Platform, NavParams, ViewController, ToastController, PopoverController } from 'ionic-angular';
 import { Beer } from '../../models/beer';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { AppService } from '../../app/app.service';
 
 
 @Component({
@@ -34,7 +35,8 @@ export class BeerPage {
         public viewCtrl: ViewController,
         public toastCtrl: ToastController,
         private sqlite: SQLite,
-        private popoverCtrl: PopoverController) {
+        private popoverCtrl: PopoverController,
+        public app: AppService) {
 
         console.log(this.params.data.name);
         if (this.params.data.id) {
@@ -79,7 +81,7 @@ export class BeerPage {
                 [this.beer.name, this.beer.price, this.beer.quantity, this.beer.ml, this.beer.liter, "", this.beer.id])
                 .then(res => {
                     this.toastCtrl.create({
-                        message: 'update success!',
+                        message: 'Cerva atualizada!',
                         duration: 3000
                     }).present();
                 })
@@ -119,8 +121,10 @@ export class BeerPage {
     }
 
     valid() {
-        return this.beer.name && this.beer.price && this.beer.quantity && this.beer.ml;
+        return this.beer.name && this.app.validNum(this.beer.price) && this.beer.price < 10000 && this.app.validNum(this.beer.quantity)
+            && this.beer.quantity < 10000 && this.app.validNum(this.beer.ml) && this.beer.ml < 100000;
     }
+
 
     getIcon(selectedValue: any) {
         this.beer.ml = selectedValue;
@@ -164,8 +168,6 @@ export class BeerPage {
         let popover = this.popoverCtrl.create(RecipientPage, {
             contentEle: this.content.nativeElement,
             setRecipient: (value) => {
-                // console.log('clear');
-                // this.beers = this.total.price = this.total.forEach = this.total.ml = this.total.mlForEach = 0;
                 this.getIcon(value);
             }
         });

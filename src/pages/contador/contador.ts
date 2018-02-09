@@ -73,15 +73,14 @@ export class ContadorPage {
   }
 
   private valid() {
-    return this.data.price && this.data.price > 0 && this.data.ml && this.data.ml > 0
-      && this.data.peaple && this.data.peaple > 0;
+    return this.app.validNum(this.data.price) && this.data.price < 1000 && this.app.validNum(this.data.ml)
+      && this.data.ml < 100000 && this.app.validNum(this.data.peaple) && this.data.peaple < 50;
   }
 
   presentPopover(ev) {
     let popover = this.popoverCtrl.create(PopoverPage, {
       contentEle: this.content.nativeElement,
       clear: () => {
-        console.log('clear');
         this.beers = this.total.price = this.total.forEach = this.total.ml = this.total.mlForEach = 0;
       }
     });
