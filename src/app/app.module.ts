@@ -9,6 +9,7 @@ import { ContadorPage } from '../pages/contador/contador';
 import { ComparaPage } from '../pages/compara/compara';
 import { TabsPage } from '../pages/tabs/tabs';
 import { BeerPage } from '../pages/beer/beer';
+import { PopoverPage } from '../pages/contador/contador';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -22,7 +23,8 @@ import { DatabaseProvider } from '../providers/database/database';
     ContadorPage,
     ComparaPage,
     TabsPage,
-    BeerPage
+    BeerPage,
+    PopoverPage
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,8 @@ import { DatabaseProvider } from '../providers/database/database';
     ContadorPage,
     ComparaPage,
     TabsPage,
-    BeerPage
+    BeerPage,
+    PopoverPage
   ],
   providers: [
     AppService,
