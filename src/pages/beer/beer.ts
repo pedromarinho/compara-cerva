@@ -1,27 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 
-import { Platform, NavParams, ViewController, ToastController } from 'ionic-angular';
+import { Platform, NavParams, ViewController, ToastController, PopoverController } from 'ionic-angular';
 import { Beer } from '../../models/beer';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+
+
+@Component({
+    templateUrl: 'recipients.html'
+})
+
+export class RecipientPage {
+    constructor(private params: NavParams, private viewCtrl: ViewController) { }
+
+    setRecipient(ml) {
+        console.log(ml);
+        this.params.get('setRecipient')(ml);
+        this.viewCtrl.dismiss();
+    }
+}
 
 @Component({
     templateUrl: 'beer.html'
 })
 export class BeerPage {
+    @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
     public beer = new Beer();
     public title = 'Adicionar';
-    public recipiente;
+    public recipient = '';
+    public recipientImg = './assets/imgs/lata_269.png';
 
     constructor(public platform: Platform,
         public params: NavParams,
         public viewCtrl: ViewController,
         public toastCtrl: ToastController,
-        private sqlite: SQLite) {
+        private sqlite: SQLite,
+        private popoverCtrl: PopoverController) {
 
         console.log(this.params.data.name);
         if (this.params.data.id) {
             this.beer = this.params.data;
             this.title = 'Editar';
+            this.getIcon(this.beer.ml);
         }
 
     }
@@ -107,30 +126,52 @@ export class BeerPage {
         this.beer.ml = selectedValue;
         switch (Number(selectedValue)) {
             case 269:
-                this.recipiente = './assets/imgs/lata_269.png';
+                this.recipient = 'Latinha';
+                this.recipientImg = './assets/imgs/lata_269.png';
                 break;
             case 300:
-                this.recipiente = './assets/imgs/garrafa_300.jpg';
+                this.recipient = 'Garrafinha';
+                this.recipientImg = './assets/imgs/garrafa_300.jpg';
                 break;
             case 350:
-                this.recipiente = './assets/imgs/lata_350.png';
+                this.recipient = 'Lata';
+                this.recipientImg = './assets/imgs/lata_350.png';
                 break;
             case 355:
-                this.recipiente = './assets/imgs/garrafa_355.jpg';
+                this.recipient = 'Long neck';
+                this.recipientImg = './assets/imgs/garrafa_355.jpg';
                 break;
             case 473:
-                this.recipiente = './assets/imgs/lata_473.png';
+                this.recipient = 'Latão';
+                this.recipientImg = './assets/imgs/lata_473.png';
                 break;
             case 550:
-                this.recipiente = './assets/imgs/lata_550.png';
+                this.recipient = 'Super latão';
+                this.recipientImg = './assets/imgs/lata_550.png';
                 break;
             case 600:
-                this.recipiente = './assets/imgs/garrafa_600.jpg';
+                this.recipient = 'Garrafa';
+                this.recipientImg = './assets/imgs/garrafa_600.jpg';
                 break;
             case 1000:
-                this.recipiente = './assets/imgs/garrafa_1000.jpg';
+                this.recipient = 'Litrão';
+                this.recipientImg = './assets/imgs/garrafa_1000.jpg';
                 break;
         }
+    }
+
+    presentPopover(ev) {
+        let popover = this.popoverCtrl.create(RecipientPage, {
+            contentEle: this.content.nativeElement,
+            setRecipient: (value) => {
+                // console.log('clear');
+                // this.beers = this.total.price = this.total.forEach = this.total.ml = this.total.mlForEach = 0;
+                this.getIcon(value);
+            }
+        });
+        popover.present({
+            ev: ev
+        });
     }
 }
 

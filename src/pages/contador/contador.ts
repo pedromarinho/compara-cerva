@@ -11,9 +11,7 @@ import { AppService } from '../../app/app.service';
 })
 
 export class PopoverPage {
-  constructor(private params: NavParams, private viewCtrl: ViewController) {
-    console.log('params: ', params);
-  }
+  constructor(private params: NavParams, private viewCtrl: ViewController) { }
 
   click() {
     this.params.get('clear')();
@@ -68,8 +66,8 @@ export class ContadorPage {
   }
 
   private updateTotal() {
-    this.total.price = Number((this.beers * this.data.price).toFixed(2));
-    this.total.forEach = Number((this.total.price / this.data.peaple).toFixed(2));
+    this.total.price = this.beers * this.data.price;
+    this.total.forEach = this.total.price / this.data.peaple;
     this.total.ml = Number((this.beers * this.data.ml).toFixed(1));
     this.total.mlForEach = Number((this.total.ml / this.data.peaple).toFixed(1));
   }

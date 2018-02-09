@@ -18,7 +18,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content #popoverContent>
     <ion-list>
         <ion-item>
             <ion-icon color="color1" name="beer" item-start></ion-icon>
@@ -38,28 +38,26 @@
             <ion-input type="number" [(ngModel)]="beer.quantity"></ion-input>
         </ion-item>
 
-        <ion-item>
-            <ion-icon color="color1" [hidden]="recipiente" name="beer" item-end></ion-icon>
-            <ion-avatar [hidden]="!recipiente" item-end>
-                <img src={{recipiente}}>
-            </ion-avatar>
-            <ion-label>Recipiente</ion-label>
-            <ion-select (ionChange)="getIcon($event)">
-                <ion-option value="269">latinha (269)</ion-option>
-                <ion-option value="350">lata (350)</ion-option>
-                <ion-option value="473">latão (473)</ion-option>
-                <ion-option value="550">super latão (550)</ion-option>
-                <ion-option value="300">garrafa (300)</ion-option>
-                <ion-option value="355">long neck (355)</ion-option>
-                <ion-option value="600">garrafa (600)</ion-option>
-                <ion-option value="1000">litrão</ion-option>
-            </ion-select>
-        </ion-item>
 
-        <ion-item item-end>
-            <ion-label stacked>Total (ml)</ion-label>
-            <ion-input type="number" [(ngModel)]="beer.ml"></ion-input>
-        </ion-item>
+        <ion-grid>
+            <ion-row>
+                <ion-col col-7>
+                    <ion-item (click)="presentPopover($event)">
+                        <ion-avatar item-start>
+                            <img src="{{recipientImg}}">
+                        </ion-avatar>
+                        <ion-label stacked>Recipiente</ion-label>
+                        <ion-input type="text" placeholder="{{recipient}}" disabled></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-5>
+                    <ion-item>
+                        <ion-label stacked>Total (ml)</ion-label>
+                        <ion-input type="number" [(ngModel)]="beer.ml"></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
 
         <!-- <ion-item>
             <ion-icon name="pin" item-start></ion-icon>
