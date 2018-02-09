@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import { Platform, NavParams, ViewController, ToastController } from 'ionic-angular';
-import { AppService } from '../../app/app.service';
 import { Beer } from '../../models/beer';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
@@ -17,7 +16,6 @@ export class BeerPage {
         public params: NavParams,
         public viewCtrl: ViewController,
         public toastCtrl: ToastController,
-        private app: AppService,
         private sqlite: SQLite) {
 
         console.log(this.params.data.name);

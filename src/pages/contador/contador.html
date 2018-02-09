@@ -4,8 +4,8 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding style="text-align: center; color: #d48e00; font-size: 1.2em">
-  <ion-grid>
+<ion-content padding class="calc-content">
+  <ion-grid style="margin-bottom: 30px">
     <ion-row>
       <ion-col col-4>
         <ion-item>
@@ -28,7 +28,7 @@
     </ion-row>
   </ion-grid>
 
-  <img src="assets/imgs/counter_background.png" height="200" width="200">
+  <img src="assets/imgs/icon.png" height="200" width="200">
 
   <p class="beers">{{beers}}</p>
 
@@ -43,13 +43,14 @@
     </button>
   </ion-fab>
 
-  <ion-card style="margin-top: -50px">
+  <ion-card style="margin-top: -70px">
     <ion-card-header style="color: #d48e00">
-      <b>R$: {{total.price}}</b>
+      <b>{{app.getFormattedPrice(total.price)}}</b>
     </ion-card-header>
     <ion-card-content>
-      <p style="color: #d48e00">Total por pessoa: R$ {{total.forEach}}</p>
-      <p style="color: #d48e00">Total consumido: {{total.ml}} ml</p>
+      <p style="color: #d48e00">Total por pessoa: {{app.getFormattedPrice(total.forEach)}}</p>
+      <p style="color: #d48e00">Consumo total / por pessoa</p>
+      <p style="color: #d48e00">{{total.ml}} / {{total.mlForEach}} ml</p>
     </ion-card-content>
   </ion-card>
 </ion-content>

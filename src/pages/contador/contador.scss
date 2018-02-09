@@ -1,14 +1,27 @@
 .beers {
     font-size: 8em;
     margin-top: -185px;
+    -webkit-text-stroke: 2px white;
+    color: #d48e00;
 }
 
 .add_bt {
-    top: 300px;
+    top: 280px;
     right: 30px;
 }
 
 .remove_bt {
-    top: 300px;
+    top: 280px;
     left: 30px;
+}
+
+.calc-content {
+    text-align: center; 
+    color: #d48e00; 
+    font-size: 1.2em
+}
+
+.calc-content .scroll-content {
+    margin-top: 23px !important;
+    overflow-y: hidden !important;
 }

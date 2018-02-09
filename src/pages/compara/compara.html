@@ -13,9 +13,9 @@
         <h1>{{i + 1}}º</h1>
       </ion-avatar>
       <h2>{{item.name}}</h2>
-      <p>R$ {{item.price}}</p>
+      <p>{{app.getFormattedPrice(item.price)}}</p>
       <p>{{item.quantity}} uni x {{item.ml}}ml</p>
-      <p>Litro: R$ {{item.liter}}</p>
+      <p>Litro: {{app.getFormattedPrice(item.liter)}}</p>
       <h2>{{item.local}}</h2>
       <ion-icon color="color1" name="create" item-end (click)="openBeerModal(item)"></ion-icon>
       <ion-icon color="color1" name="trash" item-end style="margin-left: 20px" (click)="delete(item, i)"></ion-icon>

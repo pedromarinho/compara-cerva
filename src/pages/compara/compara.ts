@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, AlertController, ToastController, ModalController } from 'ionic-angular';
 import { AppService } from '../../app/app.service';
 
@@ -16,7 +16,7 @@ export class ComparaPage {
   constructor(public navCtrl: NavController,
     public alertCtrl: AlertController,
     public toastCtrl: ToastController,
-    private app: AppService,
+    public app: AppService,
     public modalCtrl: ModalController,
     private sqlite: SQLite) {
     sqlite.create({
@@ -39,10 +39,6 @@ export class ComparaPage {
     this.getData();
   }
 
-  ionViewWillEnter() {
-    this.getData();
-  }
-
   getData() {
     this.sqlite.create({
       name: 'comparacerva.db',
@@ -59,6 +55,11 @@ export class ComparaPage {
               this.data = itens;
             } else {
               this.data = [];
+              this.toastCtrl.create({
+                message: 'Adicione uma cerveja para comparar',
+                duration: 3000,
+                position: 'middle'
+              }).present();
             }
 
           })
