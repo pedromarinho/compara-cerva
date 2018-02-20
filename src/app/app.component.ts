@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { DatabaseProvider } from '../providers/database/database';
+import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free';
 
 @Component({
   templateUrl: 'app.html'
@@ -12,7 +13,11 @@ import { DatabaseProvider } from '../providers/database/database';
 export class MyApp {
   rootPage: any = TabsPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, dataBaseProvider: DatabaseProvider) {
+  constructor(platform: Platform,
+    statusBar: StatusBar,
+    splashScreen: SplashScreen,
+    dataBaseProvider: DatabaseProvider,
+    admobFree: AdMobFree) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -21,6 +26,18 @@ export class MyApp {
       statusBar.backgroundColorByHexString('#c48200');
       splashScreen.hide();
       dataBaseProvider.createDatabase();
+
+      const bannerConfig: AdMobFreeBannerConfig = {
+        id: 'ca-app-pub-6028163069793986/9360989477',
+        isTesting: false,
+        autoShow: true,
+        bannerAtTop: false
+      };
+      admobFree.banner.config(bannerConfig);
+
+      admobFree.banner.prepare()
+        .then()
+        .catch(e => console.log(e));
     });
   }
 }
