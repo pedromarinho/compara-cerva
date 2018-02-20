@@ -3,7 +3,7 @@
     <ion-title>Calculadora</ion-title>
 
     <ion-buttons end>
-      <button ion-button icon-only (click)="presentPopover($event)">
+      <button ion-button icon-only (tap)="presentPopover($event)">
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-buttons>
@@ -34,17 +34,17 @@
     </ion-row>
   </ion-grid>
 
-  <img src="assets/imgs/icon.png" height="200" width="200">
+  <img src="assets/imgs/icon.jpg" height="200" width="200">
 
   <p class="beers">{{beers}}</p>
 
   <ion-fab class="remove_bt">
-    <button ion-fab color="color2" (click)="remove()">
+    <button ion-fab color="color2" (tap)="remove()">
       <ion-icon name="remove"></ion-icon>
     </button>
   </ion-fab>
   <ion-fab class="add_bt">
-    <button ion-fab color="color2" (click)="add()">
+    <button ion-fab color="color2" (tap)="add()">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>

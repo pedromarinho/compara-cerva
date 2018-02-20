@@ -3,7 +3,8 @@ import { NavController, AlertController, ToastController, ModalController } from
 import { AppService } from '../../app/app.service';
 
 import { BeerPage } from '../beer/beer';
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { SQLiteObject } from '@ionic-native/sqlite';
+import { DatabaseProvider } from '../../providers/database/database';
 
 @Component({
   selector: 'compara',
@@ -18,21 +19,7 @@ export class ComparaPage {
     public toastCtrl: ToastController,
     public app: AppService,
     public modalCtrl: ModalController,
-    private sqlite: SQLite) {
-    sqlite.create({
-      name: 'comparacerva.db',
-      location: 'default'
-    })
-      .then((db: SQLiteObject) => {
-        db.sqlBatch([
-          ['CREATE TABLE IF NOT EXISTS beers (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, price INTEGER, quantity INTEGER,'
-            + 'ml INTEGER, liter INTEGER, local TEXT)']
-        ])
-          .then(() => console.log('Tabela criada'))
-          .catch(e => this.log('Erro ao criar a tabela'));
-
-      })
-      .catch(e => this.log(e));
+    private dataBaseProvider: DatabaseProvider) {
   }
 
   ionViewDidLoad() {
@@ -40,10 +27,7 @@ export class ComparaPage {
   }
 
   getData() {
-    this.sqlite.create({
-      name: 'comparacerva.db',
-      location: 'default'
-    })
+    this.dataBaseProvider.getDB()
       .then((db: SQLiteObject) => {
         db.executeSql('SELECT * FROM beers ORDER BY liter ASC', {})
           .then((data: any) => {
@@ -83,22 +67,20 @@ export class ComparaPage {
         {
           text: 'Ok',
           handler: () => {
-            this.sqlite.create({
-              name: 'comparacerva.db',
-              location: 'default'
-            }).then((db: SQLiteObject) => {
-              db.executeSql('DELETE FROM beers WHERE id = ?', [item.id])
-                .then(() => {
-                  this.getData();
-                  this.toastCtrl.create({
-                    message: item.name + ' deletado',
-                    duration: 3000
-                  }).present();
-                })
-                .catch(e => this.log('Erro ao deletar'));
-            }).catch(e => {
-              console.log(e);
-            });
+            this.dataBaseProvider.getDB()
+              .then((db: SQLiteObject) => {
+                db.executeSql('DELETE FROM beers WHERE id = ?', [item.id])
+                  .then(() => {
+                    this.getData();
+                    this.toastCtrl.create({
+                      message: item.name + ' deletado',
+                      duration: 3000
+                    }).present();
+                  })
+                  .catch(e => this.log('Erro ao deletar'));
+              }).catch(e => {
+                console.log(e);
+              });
           }
         }
       ]

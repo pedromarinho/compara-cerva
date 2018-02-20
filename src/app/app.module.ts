@@ -1,6 +1,7 @@
 import { NgModule, ErrorHandler, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { enableProdMode } from '@angular/core';
 import { MyApp } from './app.component';
 
 import { AppService } from './app.service';
@@ -16,6 +17,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SQLite } from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../providers/database/database';
+import { BeerProvider } from '../providers/beer/beer';
+
+enableProdMode();
 
 @NgModule({
   declarations: [
@@ -50,7 +54,8 @@ import { DatabaseProvider } from '../providers/database/database';
     SQLite,
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    DatabaseProvider
+    DatabaseProvider,
+    BeerProvider
   ]
 })
 export class AppModule { }

@@ -2,8 +2,9 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 
 import { Platform, NavParams, ViewController, ToastController, PopoverController } from 'ionic-angular';
 import { Beer } from '../../models/beer';
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { SQLiteObject } from '@ionic-native/sqlite';
 import { AppService } from '../../app/app.service';
+import { DatabaseProvider } from '../../providers/database/database';
 
 
 @Component({
@@ -34,9 +35,9 @@ export class BeerPage {
         public params: NavParams,
         public viewCtrl: ViewController,
         public toastCtrl: ToastController,
-        private sqlite: SQLite,
         private popoverCtrl: PopoverController,
-        public app: AppService) {
+        public app: AppService,
+        private dataBaseProvider: DatabaseProvider) {
 
         console.log(this.params.data.name);
         if (this.params.data.id) {
@@ -52,49 +53,45 @@ export class BeerPage {
     }
 
     insert() {
-        this.sqlite.create({
-            name: 'comparacerva.db',
-            location: 'default'
-        }).then((db: SQLiteObject) => {
-            db.executeSql('INSERT INTO beers (name, price, quantity, ml, liter, local) VALUES(?,?,?,?,?,?)',
-                [this.beer.name, this.beer.price, this.beer.quantity, this.beer.ml, this.beer.liter, ""])
-                .then(res => {
-                    console.log(res);
-                })
-                .catch(e => {
-                    console.log(e);
-                });
-        }).catch(e => {
-            console.log(e);
-        });
+        this.dataBaseProvider.getDB()
+            .then((db: SQLiteObject) => {
+                db.executeSql('INSERT INTO beers (name, price, quantity, ml, liter, local) VALUES(?,?,?,?,?,?)',
+                    [this.beer.name, this.beer.price, this.beer.quantity, this.beer.ml, this.beer.liter, ""])
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    });
+            }).catch(e => {
+                console.log(e);
+            });
 
         this.dismiss();
 
     }
 
     update() {
-        this.sqlite.create({
-            name: 'comparacerva.db',
-            location: 'default'
-        }).then((db: SQLiteObject) => {
-            db.executeSql('UPDATE beers SET name=?, price=?, quantity=?, ml=?, liter=?, local=? WHERE id=?',
-                [this.beer.name, this.beer.price, this.beer.quantity, this.beer.ml, this.beer.liter, "", this.beer.id])
-                .then(res => {
-                    this.toastCtrl.create({
-                        message: 'Cerva atualizada!',
-                        duration: 3000
-                    }).present();
-                })
-                .catch(e => {
-                    this.toastCtrl.create({
-                        message: 'update error!',
-                        duration: 3000
-                    }).present();
-                    console.log(e);
-                });
-        }).catch(e => {
-            console.log(e);
-        });
+        this.dataBaseProvider.getDB()
+            .then((db: SQLiteObject) => {
+                db.executeSql('UPDATE beers SET name=?, price=?, quantity=?, ml=?, liter=?, local=? WHERE id=?',
+                    [this.beer.name, this.beer.price, this.beer.quantity, this.beer.ml, this.beer.liter, "", this.beer.id])
+                    .then(res => {
+                        this.toastCtrl.create({
+                            message: 'Cerva atualizada!',
+                            duration: 3000
+                        }).present();
+                    })
+                    .catch(e => {
+                        this.toastCtrl.create({
+                            message: 'update error!',
+                            duration: 3000
+                        }).present();
+                        console.log(e);
+                    });
+            }).catch(e => {
+                console.log(e);
+            });
 
         this.dismiss();
 
