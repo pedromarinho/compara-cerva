@@ -3,8 +3,7 @@ import { NavController, AlertController, ToastController, ModalController } from
 import { AppService } from '../../app/app.service';
 
 import { BeerPage } from '../beer/beer';
-import { SQLiteObject } from '@ionic-native/sqlite';
-import { DatabaseProvider } from '../../providers/database/database';
+import { BeerProvider } from '../../providers/beer/beer';
 
 @Component({
   selector: 'compara',
@@ -19,7 +18,7 @@ export class ComparaPage {
     public toastCtrl: ToastController,
     public app: AppService,
     public modalCtrl: ModalController,
-    private dataBaseProvider: DatabaseProvider) {
+    private beerProvider: BeerProvider) {
   }
 
   ionViewDidLoad() {
@@ -27,30 +26,17 @@ export class ComparaPage {
   }
 
   getData() {
-    this.dataBaseProvider.getDB()
-      .then((db: SQLiteObject) => {
-        db.executeSql('SELECT * FROM beers ORDER BY liter ASC', {})
-          .then((data: any) => {
-            if (data.rows.length > 0) {
-              let itens = []
-              for (let i = 0; i < data.rows.length; i++) {
-                itens.push(data.rows.item(i));
-              }
-              this.data = itens;
-            } else {
-              this.data = [];
-              this.toastCtrl.create({
-                message: 'Adicione uma cerveja para comparar',
-                duration: 3000,
-                position: 'middle'
-              }).present();
-            }
-
-          })
-          .catch((e) => console.error(e));
-
+    this.beerProvider.list()
+      .then(data => {
+        this.data = data;
+        if (data.length === 0) {
+          this.toastCtrl.create({
+            message: 'Adicione uma cerveja para comparar',
+            duration: 3000,
+            position: 'middle'
+          }).present();
+        }
       })
-      .catch(e => this.log(e));
   }
 
   delete(item): void {
@@ -67,20 +53,17 @@ export class ComparaPage {
         {
           text: 'Ok',
           handler: () => {
-            this.dataBaseProvider.getDB()
-              .then((db: SQLiteObject) => {
-                db.executeSql('DELETE FROM beers WHERE id = ?', [item.id])
-                  .then(() => {
-                    this.getData();
-                    this.toastCtrl.create({
-                      message: item.name + ' deletado',
-                      duration: 3000
-                    }).present();
-                  })
-                  .catch(e => this.log('Erro ao deletar'));
-              }).catch(e => {
-                console.log(e);
-              });
+            this.beerProvider.delete(item)
+              .then(() => {
+                this.getData();
+                this.toastCtrl.create({
+                  message: item.name + ' deletado',
+                  duration: 3000
+                }).present();
+              })
+              .catch(err => {
+                this.log('Erro ao deletar');
+              })
           }
         }
       ]
