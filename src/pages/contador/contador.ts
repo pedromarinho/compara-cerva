@@ -27,6 +27,7 @@ export class PopoverPage {
 export class ContadorPage {
   @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
   public beers = 0;
+  public percent = 0;
 
   public data = {
     price: null,
@@ -66,7 +67,7 @@ export class ContadorPage {
   }
 
   private updateTotal() {
-    this.total.price = this.beers * this.data.price;
+    this.total.price = this.beers * this.data.price * (1 + this.percent);
     this.total.forEach = this.total.price / this.data.peaple;
     this.total.ml = Number((this.beers * this.data.ml).toFixed(1));
     this.total.mlForEach = Number((this.total.ml / this.data.peaple).toFixed(1));
@@ -75,6 +76,17 @@ export class ContadorPage {
   private valid() {
     return this.app.validNum(this.data.price) && this.data.price < 1000 && this.app.validNum(this.data.ml)
       && this.data.ml < 100000 && this.app.validNum(this.data.peaple) && this.data.peaple < 50;
+  }
+
+  percentage(e) {
+    if (e.checked) {
+      this.percent = 0.1;
+    } else {
+      this.percent = 0;
+    }
+    if (this.total.price) {
+      this.updateTotal();
+    }
   }
 
   presentPopover(ev) {
