@@ -49,8 +49,10 @@ export class ContadorPage {
 
   public add() {
     if (this.valid()) {
-      this.beers++;
-      this.updateTotal();
+      if (this.beers < 999) {
+        this.beers++;
+        this.updateTotal();
+      }
     } else {
       this.toastCtrl.create({
         message: 'Dados inválidos!',

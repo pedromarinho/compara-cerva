@@ -1,7 +1,6 @@
 <ion-header>
   <ion-navbar color="color1">
     <ion-title>Calculadora</ion-title>
-
     <ion-buttons end>
       <button ion-button icon-only (tap)="presentPopover($event)">
         <ion-icon name="more"></ion-icon>
@@ -11,7 +10,7 @@
 </ion-header>
 
 <ion-content #popoverContent padding class="calc-content">
-  <ion-grid style="margin-bottom: 10px">
+  <ion-grid>
     <ion-row>
       <ion-col col-4>
         <ion-item>
@@ -34,9 +33,9 @@
     </ion-row>
   </ion-grid>
 
-  <img src="assets/imgs/icon.jpg" height="200" width="200">
-
-  <p class="beers">{{beers}}</p>
+  <div class="image">
+    <label class="beers" [ngStyle]="{'font-size':beers < 100 ? '7em' : '5em'}">{{beers}}</label>
+  </div>
 
   <ion-fab class="remove_bt">
     <button ion-fab color="color2" (tap)="remove()">
@@ -49,18 +48,18 @@
     </button>
   </ion-fab>
 
-  <ion-card style="margin-top: -90px">
+  <ion-card>
     <ion-card-header style="color: #d48e00">
+      <div class="percentage">
+        <label>Incluir 10%</label>
+        <ion-checkbox color="color2" (ionChange)="percentage($event)"></ion-checkbox>
+      </div>
       <b>{{app.getFormattedPrice(total.price)}}</b>
     </ion-card-header>
     <ion-card-content>
       <p style="color: #d48e00">Total por pessoa: {{app.getFormattedPrice(total.forEach)}}</p>
       <p style="color: #d48e00">Consumo total / por pessoa</p>
       <p style="color: #d48e00">{{total.ml}} / {{total.mlForEach}} ml</p>
-      <ion-item style="left: 20px">
-        <ion-label style="color: #d48e00">Incluir 10%</ion-label>
-        <ion-checkbox color="color1" checked="false" (ionChange)="percentage($event)"></ion-checkbox>
-      </ion-item>
     </ion-card-content>
   </ion-card>
 </ion-content>
