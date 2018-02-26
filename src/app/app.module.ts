@@ -20,6 +20,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { AdMobFree } from '@ionic-native/admob-free';
 import { DatabaseProvider } from '../providers/database/database';
 import { BeerProvider } from '../providers/beer/beer';
+import { Toast } from '@ionic-native/toast';
 
 enableProdMode();
 
@@ -59,7 +60,8 @@ enableProdMode();
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     DatabaseProvider,
     BeerProvider,
-    AdMobFree
+    AdMobFree,
+    Toast
   ]
 })
 export class AppModule { }

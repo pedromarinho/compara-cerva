@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, ToastController, ModalController } from 'ionic-angular';
+import { NavController, AlertController, ModalController } from 'ionic-angular';
 import { AppService } from '../../app/app.service';
 
 import { BeerPage } from '../beer/beer';
 import { BeerProvider } from '../../providers/beer/beer';
+import { Toast } from '@ionic-native/toast';
 
 @Component({
   selector: 'compara',
@@ -15,7 +16,7 @@ export class ComparaPage {
 
   constructor(public navCtrl: NavController,
     public alertCtrl: AlertController,
-    public toastCtrl: ToastController,
+    private toast: Toast,
     public app: AppService,
     public modalCtrl: ModalController,
     private beerProvider: BeerProvider) {
@@ -30,11 +31,7 @@ export class ComparaPage {
       .then(data => {
         this.data = data;
         if (data.length === 0) {
-          this.toastCtrl.create({
-            message: 'Adicione uma cerveja para comparar',
-            duration: 3000,
-            position: 'middle'
-          }).present();
+          this.showToast('Adicione uma cerveja para comparar');
         }
       })
   }
@@ -56,10 +53,7 @@ export class ComparaPage {
             this.beerProvider.delete(item)
               .then(() => {
                 this.getData();
-                this.toastCtrl.create({
-                  message: item.name + ' deletado',
-                  duration: 3000
-                }).present();
+                this.showToast(item.name + ' deletado');
               })
               .catch(err => {
                 this.log('Erro ao deletar');
@@ -77,11 +71,16 @@ export class ComparaPage {
     modal.present();
   }
 
+  showToast(message) {
+    this.toast.show(message, '3000', 'center').subscribe(
+      toast => {
+        console.log(toast);
+      }
+    );
+  }
+
   log(message) {
-    this.toastCtrl.create({
-      message: message,
-      duration: 3000
-    }).present();
+    this.toast.show(message, '5000', 'center');
   }
 
 }

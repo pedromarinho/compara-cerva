@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, ToastController, PopoverController, NavParams, ViewController } from 'ionic-angular';
+import { NavController, ToastController, PopoverController, NavParams, ViewController, AlertController } from 'ionic-angular';
 import { AppService } from '../../app/app.service';
 import { Storage } from '@ionic/storage';
 
@@ -33,7 +33,8 @@ export class ContadorPage {
     percent: 0,
     price: null,
     ml: null,
-    peaple: null
+    peaple: null,
+    appetizer: 0
   }
 
   public total = {
@@ -47,7 +48,8 @@ export class ContadorPage {
     public toastCtrl: ToastController,
     public app: AppService,
     private popoverCtrl: PopoverController,
-    private storage: Storage) { }
+    private storage: Storage,
+    public alertCtrl: AlertController) { }
 
   ionViewDidLoad() {
     this.storage.get('calculator_data').then((val) => {
@@ -56,11 +58,12 @@ export class ContadorPage {
         percent: 0,
         price: null,
         ml: null,
-        peaple: null
+        peaple: null,
+        appetizer: 0
       };
-      this.updateTotal();
+      if (this.data.price && this.data.ml && this.data.peaple) this.updateTotal();
     });
-    
+
   }
 
   public add() {
@@ -86,11 +89,21 @@ export class ContadorPage {
     }
   }
 
-  private updateTotal() {
-    this.total.price = this.data.beers * this.data.price * (1 + this.data.percent);
-    this.total.forEach = this.total.price / this.data.peaple;
+  private updatePrice() {
+    this.total.price = this.data.beers * this.data.price;
+    this.total.forEach = ((this.total.price + this.data.appetizer) * (1 + this.data.percent)) / this.data.peaple;
+  }
+
+  private updateMl() {
     this.total.ml = Number((this.data.beers * this.data.ml).toFixed(1));
     this.total.mlForEach = Number((this.total.ml / this.data.peaple).toFixed(1));
+  }
+
+  private updateTotal() {
+    if (this.valid()) {
+      this.updatePrice();
+      this.updateMl();
+    }
   }
 
   private valid() {
@@ -104,8 +117,8 @@ export class ContadorPage {
     } else {
       this.data.percent = 0;
     }
-    if (this.total.price) {
-      this.updateTotal();
+    if ((this.total.price || this.data.appetizer) && this.valid()) {
+      this.updatePrice();
     }
     this.storage.set('calculator_data', JSON.stringify(this.data));
   }
@@ -114,12 +127,52 @@ export class ContadorPage {
     let popover = this.popoverCtrl.create(PopoverPage, {
       contentEle: this.content.nativeElement,
       clear: () => {
-        this.data.beers = this.total.price = this.total.forEach = this.total.ml = this.total.mlForEach = 0;
+        this.data.beers = this.data.appetizer = this.total.price = this.total.forEach = this.total.ml = this.total.mlForEach = 0;
         this.storage.set('calculator_data', JSON.stringify(this.data));
       }
     });
     popover.present({
       ev: ev
     });
+  }
+
+  showPrompt() {
+    let prompt = this.alertCtrl.create({
+      title: 'Tira gosto',
+      message: "Digite o valor do tira gosto",
+      inputs: [
+        {
+          name: 'value',
+          type: 'number',
+          placeholder: 'valor'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Ok',
+          handler: data => {
+            console.log(data);
+            if (data.value) {
+              this.data.appetizer = Number(data.value);
+              if (this.valid()) this.total.forEach = ((this.total.price + this.data.appetizer) * (1 + this.data.percent)) / this.data.peaple;
+              this.storage.set('calculator_data', JSON.stringify(this.data));
+              console.log(this.data)
+              console.log(this.total)
+            }
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+
+  changeInput() {
+    if (this.valid()) this.updateTotal();
   }
 }

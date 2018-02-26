@@ -17,12 +17,12 @@
 }   
 
 .add_bt {
-    top: 272px;
+    top: 172px;
     right: 30px;
 }
 
 .remove_bt {
-    top: 272px;
+    top: 172px;
     left: 30px;
 }
 
@@ -39,8 +39,10 @@
 
 .percentage {
     position: relative; 
-    width: 110px; 
-    margin: 0 auto 25px auto;
+    top: 15px;
+    width: 85%;
+    // left: 0;
+    // margin: 0 auto 25px auto;
 }
 
 .percentage label {
@@ -52,4 +54,10 @@
 .percentage ion-checkbox {
     position: absolute;
     left: 0
+}
+
+.card-header-md {
+    font-size: 1.6rem;
+    color: #222;
+    padding: 0 0 0 16px;
 }

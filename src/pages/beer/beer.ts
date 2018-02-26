@@ -1,9 +1,10 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 
-import { Platform, NavParams, ViewController, ToastController, PopoverController } from 'ionic-angular';
+import { Platform, NavParams, ViewController, PopoverController } from 'ionic-angular';
 import { Beer } from '../../models/beer';
 import { AppService } from '../../app/app.service';
 import { BeerProvider } from '../../providers/beer/beer';
+import { Toast } from '@ionic-native/toast';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class BeerPage {
     constructor(public platform: Platform,
         public params: NavParams,
         public viewCtrl: ViewController,
-        public toastCtrl: ToastController,
+        private toast: Toast,
         private popoverCtrl: PopoverController,
         public app: AppService,
         private beerProvider: BeerProvider) {
@@ -57,10 +58,7 @@ export class BeerPage {
                 console.log('salvo com sucesso');
             })
             .catch(err => {
-                this.toastCtrl.create({
-                    message: 'Erro ao salvar!',
-                    duration: 3000
-                }).present();
+                this.showToast('Erro ao salvar!');
                 console.log(err);
             })
 
@@ -70,16 +68,10 @@ export class BeerPage {
     update() {
         this.beerProvider.update(this.beer)
             .then(() => {
-                this.toastCtrl.create({
-                    message: 'Cerva atualizada!',
-                    duration: 3000
-                }).present();
+                this.showToast('Cerva atualizada!');
             })
             .catch(err => {
-                this.toastCtrl.create({
-                    message: 'Erro ao atualizar!',
-                    duration: 3000
-                }).present();
+                this.showToast('Erro ao atualizar!');
                 console.log(err);
             })
 
@@ -95,10 +87,7 @@ export class BeerPage {
                 this.insert();
             }
         } else {
-            this.toastCtrl.create({
-                message: 'Dados inválidos!',
-                duration: 3000
-            }).present();
+            this.showToast('Dados inválidos!');
         }
     }
 
@@ -160,6 +149,14 @@ export class BeerPage {
         popover.present({
             ev: ev
         });
+    }
+
+    showToast(message) {
+        this.toast.show(message, '3000', 'center').subscribe(
+            toast => {
+                console.log(toast);
+            }
+        );
     }
 }
 
