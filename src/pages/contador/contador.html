@@ -34,7 +34,7 @@
   </ion-grid>
 
   <div class="image">
-    <label class="beers" [ngStyle]="{'font-size':beers < 100 ? '7em' : '5em'}">{{beers}}</label>
+    <label class="beers" [ngStyle]="{'font-size':data.beers < 100 ? '7em' : '5em'}">{{data.beers}}</label>
   </div>
 
   <ion-fab class="remove_bt">
@@ -52,7 +52,7 @@
     <ion-card-header style="color: #d48e00">
       <div class="percentage">
         <label>Incluir 10%</label>
-        <ion-checkbox color="color2" (ionChange)="percentage($event)"></ion-checkbox>
+        <ion-checkbox color="color2" [checked]="data.percent > 0" (ionChange)="percentage($event)"></ion-checkbox>
       </div>
       <b>{{app.getFormattedPrice(total.price)}}</b>
     </ion-card-header>

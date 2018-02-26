@@ -16,6 +16,7 @@ import { RecipientPage } from '../pages/beer/beer';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SQLite } from '@ionic-native/sqlite';
+import { IonicStorageModule } from '@ionic/storage';
 import { AdMobFree } from '@ionic-native/admob-free';
 import { DatabaseProvider } from '../providers/database/database';
 import { BeerProvider } from '../providers/beer/beer';
@@ -35,7 +36,8 @@ enableProdMode();
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

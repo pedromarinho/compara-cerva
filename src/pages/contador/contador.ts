@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, ToastController, PopoverController, NavParams, ViewController } from 'ionic-angular';
 import { AppService } from '../../app/app.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   template: `
@@ -26,10 +27,10 @@ export class PopoverPage {
 })
 export class ContadorPage {
   @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
-  public beers = 0;
-  public percent = 0;
 
   public data = {
+    beers: 0,
+    percent: 0,
     price: null,
     ml: null,
     peaple: null
@@ -45,12 +46,28 @@ export class ContadorPage {
   constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
     public app: AppService,
-    private popoverCtrl: PopoverController) { }
+    private popoverCtrl: PopoverController,
+    private storage: Storage) { }
+
+  ionViewDidLoad() {
+    this.storage.get('calculator_data').then((val) => {
+      this.data = JSON.parse(val) || {
+        beers: 0,
+        percent: 0,
+        price: null,
+        ml: null,
+        peaple: null
+      };
+      this.updateTotal();
+    });
+    
+  }
 
   public add() {
     if (this.valid()) {
-      if (this.beers < 999) {
-        this.beers++;
+      if (this.data.beers < 999) {
+        this.data.beers++;
+        this.storage.set('calculator_data', JSON.stringify(this.data));
         this.updateTotal();
       }
     } else {
@@ -62,16 +79,17 @@ export class ContadorPage {
   }
 
   public remove() {
-    if (this.beers > 0 && this.valid()) {
-      this.beers--;
+    if (this.data.beers > 0 && this.valid()) {
+      this.data.beers--;
+      this.storage.set('calculator_data', JSON.stringify(this.data));
       this.updateTotal();
     }
   }
 
   private updateTotal() {
-    this.total.price = this.beers * this.data.price * (1 + this.percent);
+    this.total.price = this.data.beers * this.data.price * (1 + this.data.percent);
     this.total.forEach = this.total.price / this.data.peaple;
-    this.total.ml = Number((this.beers * this.data.ml).toFixed(1));
+    this.total.ml = Number((this.data.beers * this.data.ml).toFixed(1));
     this.total.mlForEach = Number((this.total.ml / this.data.peaple).toFixed(1));
   }
 
@@ -82,20 +100,22 @@ export class ContadorPage {
 
   percentage(e) {
     if (e.checked) {
-      this.percent = 0.1;
+      this.data.percent = 0.1;
     } else {
-      this.percent = 0;
+      this.data.percent = 0;
     }
     if (this.total.price) {
       this.updateTotal();
     }
+    this.storage.set('calculator_data', JSON.stringify(this.data));
   }
 
   presentPopover(ev) {
     let popover = this.popoverCtrl.create(PopoverPage, {
       contentEle: this.content.nativeElement,
       clear: () => {
-        this.beers = this.total.price = this.total.forEach = this.total.ml = this.total.mlForEach = 0;
+        this.data.beers = this.total.price = this.total.forEach = this.total.ml = this.total.mlForEach = 0;
+        this.storage.set('calculator_data', JSON.stringify(this.data));
       }
     });
     popover.present({
