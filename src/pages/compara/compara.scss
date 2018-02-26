@@ -1,7 +1,31 @@
-ion-avatar h1, h2 {
+.item-md ion-thumbnail {
+    min-width: 70px;
+    min-height: 70px;
+}
+
+ion-thumbnail h1, h2 {
     color: #d48e00;
 }
 
-ion-avatar h1 {
-    font-size: 3em !important;
+ion-thumbnail h1 {
+    line-height: 60px;
+}
+
+.place {
+    border-radius: 50%;
+    text-align: center;
+    border-style: solid;
+    border-color: #d48e00
+}
+
+.first-place {
+    background: #FFD700;
+}
+
+.second-place {
+    background: #C0C0C0;
+}
+
+.third-place {
+    background: #A57164;
 }

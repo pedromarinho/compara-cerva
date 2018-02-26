@@ -86,4 +86,5 @@
     <plugin name="cordova-plugin-admob-free" spec="^0.14.0" />
     <allow-navigation href="http://192.168.0.144:8100" />
     <engine name="android" spec="6.3.0" />
+    <allow-navigation href="http://192.168.130.233:8100" />
 </widget>
