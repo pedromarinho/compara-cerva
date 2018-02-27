@@ -1,7 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, ToastController, PopoverController, NavParams, ViewController, AlertController } from 'ionic-angular';
+import { NavController, PopoverController, NavParams, ViewController, AlertController } from 'ionic-angular';
 import { AppService } from '../../app/app.service';
 import { Storage } from '@ionic/storage';
+import { Toast } from '@ionic-native/toast';
 
 @Component({
   template: `
@@ -28,6 +29,8 @@ export class PopoverPage {
 export class ContadorPage {
   @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
 
+  useAppetizer = false;
+
   public data = {
     beers: 0,
     percent: 0,
@@ -45,7 +48,7 @@ export class ContadorPage {
   }
 
   constructor(public navCtrl: NavController,
-    public toastCtrl: ToastController,
+    private toast: Toast,
     public app: AppService,
     private popoverCtrl: PopoverController,
     private storage: Storage,
@@ -73,11 +76,6 @@ export class ContadorPage {
         this.storage.set('calculator_data', JSON.stringify(this.data));
         this.updateTotal();
       }
-    } else {
-      this.toastCtrl.create({
-        message: 'Dados inválidos!',
-        duration: 3000
-      }).present();
     }
   }
 
@@ -91,7 +89,7 @@ export class ContadorPage {
 
   private updatePrice() {
     this.total.price = this.data.beers * this.data.price;
-    this.total.forEach = ((this.total.price + this.data.appetizer) * (1 + this.data.percent)) / this.data.peaple;
+    this.total.forEach = ((this.total.price + (this.useAppetizer ? this.data.appetizer : 0)) * (1 + this.data.percent)) / this.data.peaple;
   }
 
   private updateMl() {
@@ -107,8 +105,18 @@ export class ContadorPage {
   }
 
   private valid() {
-    return this.app.validNum(this.data.price) && this.data.price < 1000 && this.app.validNum(this.data.ml)
-      && this.data.ml < 100000 && this.app.validNum(this.data.peaple) && this.data.peaple < 50;
+    if (!this.app.validNum(this.data.price) || this.data.price > 1000) {
+      this.toast.show('Preço inválido!', '3000', 'center').subscribe();
+      return false;
+    } else if (!this.app.validNum(this.data.ml) || this.data.ml > 100000 || !Number.isInteger(Number(this.data.ml))) {
+      this.toast.show('Valor em ml inválido!', '3000', 'center').subscribe();
+      return false;
+    } else if (!this.app.validNum(this.data.peaple) || this.data.peaple > 50 || !Number.isInteger(Number(this.data.peaple))) {
+      this.toast.show('O número de pessoas é inválido!', '3000', 'center').subscribe();
+      return false;
+    } else {
+      return true;
+    }
   }
 
   percentage(e) {
@@ -121,6 +129,17 @@ export class ContadorPage {
       this.updatePrice();
     }
     this.storage.set('calculator_data', JSON.stringify(this.data));
+  }
+
+  addAppetizer(e) {
+    if (e.checked) {
+      this.useAppetizer = true;
+    } else {
+      this.useAppetizer = false;
+    }
+    if ((this.total.price || this.data.appetizer) && this.valid()) {
+      this.updatePrice();
+    }
   }
 
   presentPopover(ev) {
@@ -143,8 +162,9 @@ export class ContadorPage {
       inputs: [
         {
           name: 'value',
+          placeholder: 'valor',
           type: 'number',
-          placeholder: 'valor'
+          value: this.data.appetizer.toString()
         },
       ],
       buttons: [
@@ -157,13 +177,12 @@ export class ContadorPage {
         {
           text: 'Ok',
           handler: data => {
-            console.log(data);
-            if (data.value) {
+            if (this.app.validNum(data.value) && data.value < 50000) {
               this.data.appetizer = Number(data.value);
               if (this.valid()) this.total.forEach = ((this.total.price + this.data.appetizer) * (1 + this.data.percent)) / this.data.peaple;
               this.storage.set('calculator_data', JSON.stringify(this.data));
-              console.log(this.data)
-              console.log(this.total)
+            } else {
+              this.toast.show('Valor inválido!', '3000', 'center').subscribe();
             }
           }
         }
@@ -172,7 +191,7 @@ export class ContadorPage {
     prompt.present();
   }
 
-  changeInput() {
-    if (this.valid()) this.updateTotal();
+  changeInput(ev) {
+    if (this.data.price && this.data.ml && this.data.peaple && this.valid()) this.updateTotal();
   }
 }

@@ -15,7 +15,6 @@ export class RecipientPage {
     constructor(private params: NavParams, private viewCtrl: ViewController) { }
 
     setRecipient(ml) {
-        console.log(ml);
         this.params.get('setRecipient')(ml);
         this.viewCtrl.dismiss();
     }
@@ -39,7 +38,6 @@ export class BeerPage {
         public app: AppService,
         private beerProvider: BeerProvider) {
 
-        console.log(this.params.data.name);
         if (this.params.data.id) {
             this.beer = this.params.data;
             this.title = 'Editar';
@@ -86,8 +84,6 @@ export class BeerPage {
             } else {
                 this.insert();
             }
-        } else {
-            this.showToast('Dados inválidos!');
         }
     }
 
@@ -95,9 +91,22 @@ export class BeerPage {
         return Number(((beer.price * 1000) / (beer.ml * beer.quantity)).toFixed(2));
     }
 
-    valid() {
-        return this.beer.name && this.app.validNum(this.beer.price) && this.beer.price < 10000 && this.app.validNum(this.beer.quantity)
-            && this.beer.quantity < 10000 && this.app.validNum(this.beer.ml) && this.beer.ml < 100000;
+    private valid() {
+        if (!this.beer.name) {
+            this.toast.show('Digite um nome válido!', '3000', 'center').subscribe();
+            return false;
+        } else if (!this.app.validNum(this.beer.price) || this.beer.price > 10000) {
+            this.toast.show('Digite um preço válido!', '3000', 'center').subscribe();
+            return false;
+        } else if (!this.app.validNum(this.beer.quantity) || this.beer.quantity > 10000 || !Number.isInteger(Number(this.beer.quantity))) {
+            this.toast.show('Quantidade digitada é inválida!', '3000', 'center').subscribe();
+            return false;
+        } else if (!this.app.validNum(this.beer.ml) || this.beer.ml > 100000 || !Number.isInteger(Number(this.beer.ml))) {
+            this.toast.show('Valor em ml inválido!', '3000', 'center').subscribe();
+            return false;
+        } else {
+            return true;
+        }
     }
 
 
@@ -152,11 +161,7 @@ export class BeerPage {
     }
 
     showToast(message) {
-        this.toast.show(message, '3000', 'center').subscribe(
-            toast => {
-                console.log(toast);
-            }
-        );
+        this.toast.show(message, '3000', 'center').subscribe();
     }
 }
 

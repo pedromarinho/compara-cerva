@@ -39,10 +39,7 @@
 
 .percentage {
     position: relative; 
-    top: 15px;
     width: 85%;
-    // left: 0;
-    // margin: 0 auto 25px auto;
 }
 
 .percentage label {
@@ -60,4 +57,13 @@
     font-size: 1.6rem;
     color: #222;
     padding: 0 0 0 16px;
+}
+
+.bt-appetizer {
+    width: 40%; 
+    height: 30px; 
+    margin-right: 0; 
+    font-size: 0.9em;
+    color: #d48e00; 
+    top: -6px;
 }

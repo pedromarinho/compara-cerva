@@ -72,11 +72,7 @@ export class ComparaPage {
   }
 
   showToast(message) {
-    this.toast.show(message, '3000', 'center').subscribe(
-      toast => {
-        console.log(toast);
-      }
-    );
+    this.toast.show(message, '3000', 'center').subscribe();
   }
 
   log(message) {

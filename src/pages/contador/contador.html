@@ -49,27 +49,32 @@
   </ion-fab>
 
   <ion-card>
-    <ion-card-header style="color: #d48e00; margin-bottom: 10px">
-      <ion-grid style="height: 60px;">
-        <ion-row style="margin-bottom: 28px;">
+    <ion-card-header style="color: #d48e00; height: 75px;">
+      <ion-grid>
+        <ion-row style="margin-bottom: 19px;">
           <ion-col col-6>
             <div class="percentage">
               <label>Incluir 10%</label>
-              <ion-checkbox color="color2" [checked]="data.percent > 0" (ionChange)="percentage($event)"></ion-checkbox>
+              <ion-checkbox color="color2" [checked]="data.percent > 0" [disabled]="!data.price || !data.ml || !data.peaple" (ionChange)="percentage($event)"></ion-checkbox>
             </div>
           </ion-col>
           <ion-col col-6>
-            <button ion-button color="color2" round style="width: 80%; margin-right: 0; font-size: 0.9em;
-            color: #d48e00;" (tap)="showPrompt()">Tira gosto</button>
+            <div class="percentage">
+              <label>Tira-gosto</label>
+              <ion-checkbox color="color2" [checked]="data.appetizer > 0" [disabled]="!data.price || !data.ml || !data.peaple" (ionChange)="addAppetizer($event)"></ion-checkbox>
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>
       <b>{{app.getFormattedPrice(total.price)}}</b>
       <ion-icon color="color1" name="beer" item-end></ion-icon>
-      <ng-container *ngIf="data.appetizer && data.appetizer > 0">
+      <ng-container *ngIf="useAppetizer">
         +
-        <label item-start>{{app.getFormattedPrice(data.appetizer)}}</label>
-        <ion-icon color="color1" name="pizza" item-end></ion-icon>
+        <button [disabled]="!data.price || !data.ml || !data.peaple" ion-button item-end icon-end color="color2" round class="bt-appetizer"
+          (tap)="showPrompt()">
+          {{app.getFormattedPrice(data.appetizer)}}
+          <ion-icon name='pizza'></ion-icon>
+        </button>
       </ng-container>
     </ion-card-header>
     <ion-card-content>

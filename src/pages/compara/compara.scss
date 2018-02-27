@@ -1,6 +1,6 @@
 .item-md ion-thumbnail {
-    min-width: 70px;
-    min-height: 70px;
+    min-width: 65px;
+    min-height: 65px;
 }
 
 ion-thumbnail h1, h2 {
@@ -8,24 +8,32 @@ ion-thumbnail h1, h2 {
 }
 
 ion-thumbnail h1 {
-    line-height: 60px;
+    line-height: 50px;
 }
 
 .place {
     border-radius: 50%;
     text-align: center;
     border-style: solid;
+    border-width: 6px;
     border-color: #d48e00
 }
 
 .first-place {
-    background: #FFD700;
+    background: #D4AF37;
+    border-color: #FFDF00;
 }
 
 .second-place {
     background: #C0C0C0;
+    border-color: #838996;
 }
 
 .third-place {
     background: #A57164;
+    border-color: #CD7F32;
+}
+
+.first-place h1, .second-place h1, .third-place h1 {
+    color: white
 }
