@@ -22,7 +22,7 @@ export class ComparaPage {
     private beerProvider: BeerProvider) {
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     this.getData();
   }
 
@@ -65,10 +65,8 @@ export class ComparaPage {
     confirm.present();
   }
 
-  openBeerModal(beer) {
-    let modal = this.modalCtrl.create(BeerPage, beer);
-    modal.onDidDismiss(() => this.getData());
-    modal.present();
+  openBeerPage(beer) {
+    this.navCtrl.push(BeerPage, beer);
   }
 
   showToast(message) {
