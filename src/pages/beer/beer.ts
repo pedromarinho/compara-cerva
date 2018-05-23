@@ -64,7 +64,7 @@ export class BeerPage {
     }
 
     update() {
-        this.beerProvider.update(this.beer)
+        this.beerProvider.update(this.beer.id, this.beer)
             .then(() => {
                 this.showToast('Cerva atualizada!');
             })

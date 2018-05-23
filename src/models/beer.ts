@@ -1,5 +1,5 @@
 export class Beer {
-    id: number;
+    id: string;
     name: string;
     price: number;
     quantity: number;
@@ -8,7 +8,7 @@ export class Beer {
     local: string;
 
     constructor(
-        id: number = undefined,
+        id: string = undefined,
         name: string = undefined,
         price: number = undefined,
         quantity: number = undefined,

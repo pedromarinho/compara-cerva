@@ -4,7 +4,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { TabsPage } from '../pages/tabs/tabs';
-import { DatabaseProvider } from '../providers/database/database';
 import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free';
 
 @Component({
@@ -16,7 +15,6 @@ export class MyApp {
   constructor(platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
-    dataBaseProvider: DatabaseProvider,
     admobFree: AdMobFree) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -25,7 +23,6 @@ export class MyApp {
       // statusBar.overlaysWebView(true);
       statusBar.backgroundColorByHexString('#c48200');
       splashScreen.hide();
-      dataBaseProvider.createDatabase();
 
       const bannerConfig: AdMobFreeBannerConfig = {
         id: 'ca-app-pub-6028163069793986/9360989477',

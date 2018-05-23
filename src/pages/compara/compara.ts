@@ -50,7 +50,7 @@ export class ComparaPage {
         {
           text: 'Ok',
           handler: () => {
-            this.beerProvider.delete(item)
+            this.beerProvider.delete(item.id)
               .then(() => {
                 this.getData();
                 this.showToast(item.name + ' deletado');

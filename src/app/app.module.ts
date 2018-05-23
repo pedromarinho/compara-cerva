@@ -15,10 +15,8 @@ import { RecipientPage } from '../pages/beer/beer';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { SQLite } from '@ionic-native/sqlite';
 import { IonicStorageModule } from '@ionic/storage';
 import { AdMobFree } from '@ionic-native/admob-free';
-import { DatabaseProvider } from '../providers/database/database';
 import { BeerProvider } from '../providers/beer/beer';
 import { Toast } from '@ionic-native/toast';
 
@@ -55,10 +53,8 @@ enableProdMode();
     AppService,
     StatusBar,
     SplashScreen,
-    SQLite,
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    DatabaseProvider,
     BeerProvider,
     AdMobFree,
     Toast
